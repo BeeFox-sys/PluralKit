@@ -47,7 +47,7 @@ namespace PluralKit.API
             o.Add("name", member.Name);
             o.Add("color", member.MemberPrivacy.CanAccess(ctx) ? member.Color : null);
             o.Add("display_name", member.DisplayName);
-            o.Add("birthday", member.MemberPrivacy.CanAccess(ctx) && member.Birthday.HasValue ? DateTimeFormats.DateExportFormat.Format(member.Birthday.Value) : null);
+            o.Add("birthday", member.MemberPrivacy.CanAccess(ctx) && member.BirthdayDate.HasValue ? DateTimeFormats.DateExportFormat.Format(member.BirthdayDate.Value) : null);
             o.Add("pronouns", member.MemberPrivacy.CanAccess(ctx) ? member.Pronouns : null);
             o.Add("avatar_url", member.AvatarUrl);
             o.Add("description", member.MemberPrivacy.CanAccess(ctx) ? member.Description : null);
@@ -84,8 +84,8 @@ namespace PluralKit.API
             {
                 var str = o.Value<string>("birthday").NullIfEmpty();
                 var res = DateTimeFormats.DateExportFormat.Parse(str);
-                if (res.Success) member.Birthday = res.Value;
-                else if (str == null) member.Birthday = null;
+                if (res.Success) member.BirthdayDate = res.Value;
+                else if (str == null) member.BirthdayDate = null;
                 else throw new JsonModelParseError("Could not parse member birthday.");
             }
 

@@ -192,7 +192,7 @@ namespace PluralKit.Bot
             if (MatchClear(ctx))
             {
                 CheckEditMemberPermission(ctx, target);
-                target.Birthday = null;
+                target.BirthdayDate = null;
                 await _data.SaveMember(target);
                 await ctx.Reply($"{Emojis.Success} Member birthdate cleared.");
             } 
@@ -200,7 +200,7 @@ namespace PluralKit.Bot
             {
                 CheckReadMemberPermission(ctx, target);
                 
-                if (target.Birthday == null)
+                if (target.BirthdayDate == null)
                     await ctx.Reply("This member does not have a birthdate set."
                         + (ctx.System?.Id == target.System ? $" To set one, type `pk;member {target.Hid} birthdate <birthdate>`." : ""));
                 else
@@ -214,7 +214,7 @@ namespace PluralKit.Bot
                 var birthdayStr = ctx.RemainderOrNull();
                 var birthday = DateUtils.ParseDate(birthdayStr, true);
                 if (birthday == null) throw Errors.BirthdayParseError(birthdayStr);
-                target.Birthday = birthday;
+                target.BirthdayDate = birthday;
                 await _data.SaveMember(target);
                 await ctx.Reply($"{Emojis.Success} Member birthdate changed.");
             }

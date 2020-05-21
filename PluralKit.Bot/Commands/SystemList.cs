@@ -80,7 +80,7 @@ namespace PluralKit.Bot
                 var profile = $"**ID**: {m.Hid}";
                 if (m.DisplayName != null) profile += $"\n**Display name**: {m.DisplayName}";
                 if (m.Pronouns != null) profile += $"\n**Pronouns**: {m.Pronouns}";
-                if (m.Birthday != null) profile += $"\n**Birthdate**: {m.BirthdayString}";
+                if (m.BirthdayDate != null) profile += $"\n**Birthdate**: {m.BirthdayString}";
                 if (m.ProxyTags.Count > 0) profile += $"\n**Proxy tags:** {m.ProxyTagsString()}";
                 if (m.Description != null) profile += $"\n\n{m.Description}";
                 if (m.MemberPrivacy == PrivacyLevel.Private)

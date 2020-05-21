@@ -16,7 +16,7 @@ namespace PluralKit.Core {
         [JsonProperty("avatar_url")] public string AvatarUrl { get; set; }
         [JsonProperty("name")] public string Name { get; set; }
         [JsonProperty("display_name")] public string DisplayName { get; set; }
-        [JsonProperty("birthday")] public LocalDate? Birthday { get; set; }
+        [JsonProperty("birthday")] public LocalDate? BirthdayDate { get; set; }
         [JsonProperty("pronouns")] public string Pronouns { get; set; }
         [JsonProperty("description")] public string Description { get; set; }
         [JsonProperty("proxy_tags")] public ICollection<ProxyTag> ProxyTags { get; set; }
@@ -31,11 +31,11 @@ namespace PluralKit.Core {
         {
             get
             {
-                if (Birthday == null) return null;
+                if (BirthdayDate == null) return null;
 
                 var format = LocalDatePattern.CreateWithInvariantCulture("MMM dd, yyyy");
-                if (Birthday?.Year == 1 || Birthday?.Year == 4) format = LocalDatePattern.CreateWithInvariantCulture("MMM dd");
-                return format.Format(Birthday.Value);
+                if (BirthdayDate?.Year == 1 || BirthdayDate?.Year == 4) format = LocalDatePattern.CreateWithInvariantCulture("MMM dd");
+                return format.Format(BirthdayDate.Value);
             }
         }
 

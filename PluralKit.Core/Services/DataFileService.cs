@@ -37,7 +37,7 @@ namespace PluralKit.Core
                 Name = m.Name,
                 DisplayName = m.DisplayName,
                 Description = m.Description,
-                Birthday = m.Birthday != null ? DateTimeFormats.DateExportFormat.Format(m.Birthday.Value) : null,
+                Birthday = m.BirthdayDate != null ? DateTimeFormats.DateExportFormat.Format(m.BirthdayDate.Value) : null,
                 Pronouns = m.Pronouns,
                 Color = m.Color,
                 AvatarUrl = m.AvatarUrl,
@@ -174,7 +174,7 @@ namespace PluralKit.Core
                 if (dataMember.Birthday != null)
                 {
                     var birthdayParse = DateTimeFormats.DateExportFormat.Parse(dataMember.Birthday);
-                    member.Birthday = birthdayParse.Success ? (LocalDate?)birthdayParse.Value : null;
+                    member.BirthdayDate = birthdayParse.Success ? (LocalDate?)birthdayParse.Value : null;
                 }
 
                 await _data.SaveMember(member);
