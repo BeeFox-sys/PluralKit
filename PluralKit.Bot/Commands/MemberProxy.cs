@@ -43,24 +43,9 @@ namespace PluralKit.Bot
                 return await ctx.PromptYesNo(msg);
             }
             
-            // "Sub"command: clear flag
-            if (ctx.MatchClear())
-            {
-                // If we already have multiple tags, this would clear everything, so prompt that
-                if (target.ProxyTags.Count > 1)
-                {
-                    var msg = $"{Emojis.Warn} You already have multiple proxy tags set: {target.ProxyTagsString()}\nDo you want to clear them all?";
-                    if (!await ctx.PromptYesNo(msg))
-                        throw Errors.GenericCancelled();
-                }
-                
-                var patch = new MemberPatch {ProxyTags = Partial<ProxyTag[]>.Present(new ProxyTag[0])};
-                await _db.Execute(conn => conn.UpdateMember(target.Id, patch));
-                
-                await ctx.Reply($"{Emojis.Success} Proxy tags cleared.");
-            }
+            
             // "Sub"command: no arguments; will print proxy tags
-            else if (!ctx.HasNext(skipFlags: false))
+            if (!ctx.HasNext(skipFlags: false))
             {
                 if (target.ProxyTags.Count == 0)
                     await ctx.Reply("This member does not have any proxy tags.");
@@ -106,6 +91,22 @@ namespace PluralKit.Bot
                 await _db.Execute(conn => conn.UpdateMember(target.Id, patch));
 
                 await ctx.Reply($"{Emojis.Success} Removed proxy tags ``﻿{tagToRemove.ProxyString.EscapeBacktickPair()}﻿``.");
+            }
+            // "Sub"command: clear flag
+            else if (ctx.MatchClear())
+            {
+                // If we already have multiple tags, this would clear everything, so prompt that
+                if (target.ProxyTags.Count > 1)
+                {
+                    var msg = $"{Emojis.Warn} You already have multiple proxy tags set: {target.ProxyTagsString()}\nDo you want to clear them all?";
+                    if (!await ctx.PromptYesNo(msg))
+                        throw Errors.GenericCancelled();
+                }
+                
+                var patch = new MemberPatch {ProxyTags = Partial<ProxyTag[]>.Present(new ProxyTag[0])};
+                await _db.Execute(conn => conn.UpdateMember(target.Id, patch));
+                
+                await ctx.Reply($"{Emojis.Success} Proxy tags cleared.");
             }
             // Subcommand: bare proxy tag given
             else
