@@ -118,7 +118,7 @@ namespace PluralKit.API
             if (!auth.Succeeded) return StatusCode(StatusCodes.Status403Forbidden, "Unauthorized to view fronter.");
             
             var sw = await _data.GetLatestSwitch(system.Id);
-            if (sw == null) return NotFound("System has no registered switches."); 
+            if (sw == null) return StatusCode(StatusCodes.Status204NoContent, "System has no registered switches."); 
                 
             var members = _data.GetSwitchMembers(sw);
             return Ok(new FrontersReturn
